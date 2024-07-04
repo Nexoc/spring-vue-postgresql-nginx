@@ -1,0 +1,51 @@
+
+services:
+
+# DB
+  db_content:
+    image: postgres:14-alpine
+    container_name: postgres_content
+    ports:
+      - 5432:5432 
+    volumes:
+      - ~/apps/postgres:/var/lib/postgresql/data-content
+    environment:
+      - POSTGRES_PASSWORD=0880
+      - POSTGRES_USER=nexoc
+      - POSTGRES_DB=content
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U nexoc -d content"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+# Backend Spring Boot Application
+  backend:
+    image: openjdk:23-ea-21-oraclelinux9
+    container_name: backend
+
+    depends_on:
+      - db_content
+    volumes:
+      - ./api.jar:/app/api.jar  
+      - ./wait-for-it.sh:/wait-for-it.sh
+
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db_content:5432/content
+      SPRING_DATASOURCE_USERNAME: nexoc
+      SPRING_DATASOURCE_PASSWORD: '0880'
+      SPRING_DATASOURCE_DRIVER-CLASS-NAME: org.postgresql.Driver
+
+    ports:
+      - 8001:8001
+    # wait for a DB  
+    command: ["sh", "-c", "sh /wait-for-it.sh db_content:5432 -- java -jar /app/api.jar"]
+    
+# Frontend
+  frontend:
+    build:
+      context: ./frontend-vue
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"  # Map port 8080 on the host to port 80 on the container
+
