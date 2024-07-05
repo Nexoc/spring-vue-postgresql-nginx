@@ -85,7 +85,7 @@ const actions = {
             // key is 'folderDto' value is {}
             formData.append('folderDto', JSON.stringify(folderDto));
                 
-            let http = "http://localhost:8001/api/v1/users/" + data.userId + "/folders/add-folder"
+            let http = "/api/v1/users/" + data.userId + "/folders/add-folder"
             let response = await axios.post(http, formData)
                 .catch(error => {
                         console.error('Error during inserting the new FOLDER: ', error);
@@ -103,8 +103,8 @@ const actions = {
             }
         },
         async updateFolder ({ commit }, data) {
-            let http = "http://localhost:8001/api/v1/users/" + data.userId + "/folders/update/" + data.folderId
-                    // http://localhost:8001/api/v1/users/             1     /folders/update/    2
+            let http = "/api/v1/users/" + data.userId + "/folders/update/" + data.folderId
+                        
             const folderDto = {
                 folderId: data.folderId,
                 title: data.title,
@@ -130,7 +130,7 @@ const actions = {
 
         // get folder's data from DB per ID
         async findAllFolders({ dispatch }, userId) {
-            let http = "http://localhost:8001/api/v1/users/" + userId + "/folders/all"
+            let http = "/api/v1/users/" + userId + "/folders/all"
             let response = await axios.get(http)
                 .catch(error => {
                         console.error('Error to show all folders: ', error);
@@ -141,7 +141,7 @@ const actions = {
         },
 
         async findFolderById ({ commit }, data) {
-            let http = "http://localhost:8001/api/v1/users/" + data.userId + "/folders/" + data.folderId
+            let http = "/api/v1/users/" + data.userId + "/folders/" + data.folderId
             let response = await axios.get(http)
             .catch(error => {
                     console.error('Error to show all folders: ', error);
@@ -160,7 +160,7 @@ const actions = {
         },
 
         async deleteFolder ({ commit }, data) {            
-            let http = "http://localhost:8001/api/v1/users/" + data.userId + "/folders/delete/" + data.folderId
+            let http = "/api/v1/users/" + data.userId + "/folders/delete/" + data.folderId
             let response = await axios.delete(http)
                     .catch(error => {
                         console.error('Error to delete folder: ', error);
@@ -171,7 +171,7 @@ const actions = {
         },
 
         async getContents({ commit }, data) {            
-            let http = "http://localhost:8001/api/v1/users/" + data.userId + "/folders/" + data.folderId + "/contents";
+            let http = "/api/v1/users/" + data.userId + "/folders/" + data.folderId + "/contents";
             let response = await axios.get(http)
             .catch(error => {
                     console.error('Error to show all contents: ', error);

@@ -76,7 +76,7 @@ const mutations = {
   
 const actions = {
         async findContentById ({ commit }, contentId) {
-            let http = "http://localhost:8001/api/v1/contents/" + contentId
+            let http = "/api/v1/contents/" + contentId
             let response = await axios.get(http)
             .catch(error => {
                 console.error('Error during geting the content with id: ' + contentId, error);
@@ -112,7 +112,7 @@ const actions = {
             const formData = new FormData();            
             formData.append('file', imageBlob, 'image.png');
             formData.append('contentDto', JSON.stringify(contentDto));          
-            let http = "http://localhost:8001/api/v1/contents/update/" + data.contentId
+            let http = "/api/v1/contents/update/" + data.contentId
             let response = await axios.put(http, formData)
                 .catch(error => {
                         console.error('Error during inserting the new Content: ', error);
@@ -135,7 +135,7 @@ const actions = {
         },
 
         async deleteContent ({ commit }, contentId) {
-            let http = "http://localhost:8001/api/v1/contents/delete/" + contentId
+            let http = "/api/v1/contents/delete/" + contentId
             let response = await axios.delete(http)
             .catch(error => {
                     console.error('Error during deleting the content with id: ' + contentId, error);
@@ -160,7 +160,7 @@ const actions = {
             const formData = new FormData();            
             formData.append('file', imageBlob, 'image.png');
             formData.append('contentDto', JSON.stringify(contentDto));          
-            let http = "http://localhost:8001/api/v1/contents/add-content"
+            let http = "/api/v1/contents/add-content"
             let response = await axios.post(http, formData)
                 .catch(error => {
                         console.error('Error during inserting the new Content: ', error);
