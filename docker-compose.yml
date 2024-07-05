@@ -44,8 +44,8 @@ services:
 # Frontend
   frontend:
     build:
-      context: ./frontend-vue
+      context: ./frontend
       dockerfile: Dockerfile
     ports:
-      - "8080:80"  # Map port 8080 on the host to port 80 on the container
+      - "80:80"  # Map port 8080 on the host to port 80 on the container
 
